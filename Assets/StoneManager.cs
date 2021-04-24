@@ -17,9 +17,10 @@ public class StoneManager : MonoBehaviour
         
     }
 
-    public void removeStone(float strength, Vector2 direction)
+    public void removeStone(Vector2 targetPosition, string dir)
     {
-        stones[0].BreakConnection(strength,direction);
+        //stones[0].BreakConnection(strength,direction);
+        stones[0].NewBreakConnection(targetPosition,dir);
         stones.Remove(stones[0]);
     }
 }

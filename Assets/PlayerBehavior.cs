@@ -25,6 +25,7 @@ public class PlayerBehavior : MonoBehaviour
     public float oxygenDepletion = 0.1f;
     public Slider oxygenSlider;
     public float airPocketOxygen = 10f;
+    LineRenderer throwLine;
     
     void Start()
     {
@@ -32,6 +33,7 @@ public class PlayerBehavior : MonoBehaviour
         myRb = GetComponent<Rigidbody2D>();
         gravity = phyMan.gravity;
         buoyancy = phyMan.buoyancy;
+        throwLine = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -81,6 +83,18 @@ public class PlayerBehavior : MonoBehaviour
         Vector2 worldPosition = Camera.main.ScreenToWorldPoint(targetPosition);
         Vector2 throwDirection = (worldPosition - myRb.position).normalized;
         Vector2 horizontifiedThrow = new Vector2(throwDirection.x, 0);
+        Vector2 localThrowPosition = new Vector2(throwStrength, 0);
+        Vector2 worldThrowPosition = new Vector2();
+        string direction = "right";
+        if (horizontifiedThrow.x > 0)
+        {
+             worldThrowPosition = new Vector2(transform.position.x + localThrowPosition.x, 0);
+            direction = "right";
+        } else
+        {
+             worldThrowPosition = new Vector2(transform.position.x - localThrowPosition.x, 0);
+            direction = "left";
+        } 
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -89,18 +103,29 @@ public class PlayerBehavior : MonoBehaviour
 
         if(Input.GetMouseButton(0))
         {
-            throwStrength += 0.01f;
+            
+            
+            throwStrength += 0.05f;
+            if (horizontifiedThrow.x > 0)
+            {
+                throwLine.SetPosition(1, localThrowPosition);
+            } else
+            {
+                throwLine.SetPosition(1, -localThrowPosition);
+            }
         }
 
         if(Input.GetMouseButtonUp(0))
         {
-            Debug.Log("throw strngth "+ throwStrength);
-            myStones.removeStone(throwStrength,horizontifiedThrow);
+           
+            Debug.Log("set Target"+ worldThrowPosition + " direction "+direction);
+            myStones.removeStone(worldThrowPosition, direction);
             swimStrength += 0.5f;
             weight -= 2 ;
             horizontalMultiplier += 2;
             myTrans.localScale *= 0.8f;
             throwStrength = 0;
+            throwLine.SetPosition(1, Vector3.zero);
         }
 
        

@@ -15,7 +15,10 @@ public class StoneBehavior : MonoBehaviour
     float horizontalVelocity = 0;
     public float stoneThrowMultiplier = 2000;
     public float drag = 1;
+    public float timeToTarget = 1f;
     Rigidbody2D myRb;
+    public string direction = "right";
+    public Vector2 targetPosition;
     void Start()
     {
         PhyMan = GameObject.FindGameObjectWithTag("PhysicsManager").GetComponent<PhysicsManager>();
@@ -37,8 +40,11 @@ public class StoneBehavior : MonoBehaviour
         
     }
 
+   
+
     public void WaterDrag()
     {
+        /*
         if (horizontalVelocity > 0)
         {
             horizontalVelocity -= drag;
@@ -46,23 +52,37 @@ public class StoneBehavior : MonoBehaviour
         else if(horizontalVelocity <0)
         {
             horizontalVelocity += drag;
+        }*/
+        if (direction == "right")
+        {
+            if (transform.position.x >= targetPosition.x)
+            {
+                horizontalVelocity = 0;
+                // myRb.velocity = new Vector2(0, myRb.velocity.y);
+            }
+        } else
+        {
+            if(transform.position.x <= targetPosition.x )
+            {
+                horizontalVelocity = 0;
+            }
         }
         
     }
 
-    public void BreakConnection(float strength, Vector2 direction)
+ 
+
+    public void NewBreakConnection (Vector2 finalPosition, string dir)
     {
         Destroy(myJoint);
-        if(direction.x >= 0)
-        {
-            horizontalVelocity = strength * stoneThrowMultiplier;
-        } else
-        {
-            horizontalVelocity = strength * stoneThrowMultiplier * -1;
-        }
         
-        //myRb.AddForce(strength * stoneThrowMultiplier * direction);
+        horizontalVelocity = (finalPosition.x - myRb.position.x) / timeToTarget;
+        
+        targetPosition = finalPosition;
+        Debug.Log("received target " + targetPosition);
+        direction = dir;
         connected = false;
+        
     }
     
     void FallToGround()
