@@ -49,11 +49,11 @@ public class PlayerBehavior : MonoBehaviour
     {
         //
         Vector2 resultantVelocity = new Vector2(horizontalVelocity, verticalVelocity);
-        myRb.velocity = Vector2.Lerp(myRb.velocity, resultantVelocity,10* Time.deltaTime);
-       // myRb.velocity = resultantVelocity;
         
+        myRb.velocity = Vector2.Lerp(myRb.velocity, resultantVelocity,10* Time.deltaTime);
         
     }
+
     
     void ControlOxygenLevels()
     {

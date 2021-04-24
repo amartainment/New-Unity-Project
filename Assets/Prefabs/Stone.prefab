@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5680084406165567718}
   m_Layer: 0
   m_Name: Stone
-  m_TagString: Untagged
+  m_TagString: stone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 25
-  stoneThrowMultiplier: 30
+  stoneThrowMultiplier: 50
   drag: 1
 --- !u!61 &5680084406165567705
 BoxCollider2D:
@@ -162,6 +162,6 @@ FixedJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.83, y: -1.0199999}
+  m_ConnectedAnchor: {x: 0.79, y: -1.88}
   m_DampingRatio: 0
   m_Frequency: 0
