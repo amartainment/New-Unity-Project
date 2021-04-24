@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerBehavior : MonoBehaviour
 {
@@ -19,7 +21,11 @@ public class PlayerBehavior : MonoBehaviour
     Rigidbody2D myRb;
     Transform myTrans;
     public bool inWater = false;
-
+    public float oxygenLevel = 100;
+    public float oxygenDepletion = 0.1f;
+    public Slider oxygenSlider;
+    public float airPocketOxygen = 10f;
+    
     void Start()
     {
         myTrans = GetComponent<Transform>();
@@ -36,6 +42,7 @@ public class PlayerBehavior : MonoBehaviour
         SetHorizontalVelocity();
         ThrowRock();
         Swim();
+        ControlOxygenLevels();
     }
 
     void ApplyForces()
@@ -47,6 +54,26 @@ public class PlayerBehavior : MonoBehaviour
         
         
     }
+    
+    void ControlOxygenLevels()
+    {
+        oxygenSlider.value = oxygenLevel / 100;
+        if (inWater)
+        {
+            oxygenLevel -= oxygenDepletion;
+        }
+
+        if(!inWater)
+        {
+            oxygenLevel = 100;
+        }
+
+        if(oxygenLevel <=0)
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+
 
     void ThrowRock()
     {
@@ -84,6 +111,7 @@ public class PlayerBehavior : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.W))
         {
             myRb.AddForce(Vector2.up * 1000 * swimStrength);
+            oxygenLevel -= 5;
         }
     }
   
@@ -104,5 +132,14 @@ public class PlayerBehavior : MonoBehaviour
     void SetHorizontalVelocity()
     {
         horizontalVelocity = Input.GetAxis("Horizontal")*horizontalMultiplier;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+       if(collision.CompareTag("air"))
+        {
+            oxygenLevel += airPocketOxygen;
+            Destroy(collision.gameObject);
+        } 
     }
 }

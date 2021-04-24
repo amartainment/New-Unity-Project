@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ground
   - PhysicsManager
+  - air
   layers:
   - Default
   - TransparentFX
