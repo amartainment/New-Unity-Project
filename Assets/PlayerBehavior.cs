@@ -113,6 +113,12 @@ public class PlayerBehavior : MonoBehaviour
             myRb.AddForce(Vector2.up * 1000 * swimStrength);
             oxygenLevel -= 5;
         }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            myRb.AddForce(- Vector2.up * 1000 * swimStrength);
+            oxygenLevel -= 5;
+        }
     }
   
     void SetVerticalVelocity()
