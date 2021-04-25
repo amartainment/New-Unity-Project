@@ -109,10 +109,14 @@ public class FishBehavior : MonoBehaviour
             }
         }
 
+        
         if (collision.CompareTag("Player"))
         {
-            myAnimator.Play("chomp");
-            Destroy(collision.gameObject);
+            if (!stunned)
+            {
+                myAnimator.Play("chomp");
+                Destroy(collision.gameObject);
+            }
         }
     }
     private void OnCollisionEnter2D(Collision2D collision)
