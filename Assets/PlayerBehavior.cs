@@ -8,7 +8,7 @@ public class PlayerBehavior : MonoBehaviour
 {
     // Start is called before the first frame update
     public float waterLevel;
-    public int weight = 1;
+    public int stoneWeight = 1;
     public float horizontalVelocity = 0;
     public float verticalVelocity = 0;
     private float horizontalMultiplier = 5;
@@ -25,7 +25,11 @@ public class PlayerBehavior : MonoBehaviour
     public float oxygenDepletion = 0.1f;
     public Slider oxygenSlider;
     public float airPocketOxygen = 10f;
+    public float swimmingOxygen = 2.5f;
     LineRenderer throwLine;
+    public Animator swimAnimator;
+    public Transform spriteTransform;
+    
     
     void Start()
     {
@@ -45,14 +49,65 @@ public class PlayerBehavior : MonoBehaviour
         ThrowRock();
         Swim();
         ControlOxygenLevels();
+        HandleAnimations();
     }
 
+    void HandleAnimations()
+    {
+        if(horizontalVelocity >0)
+        {
+            spriteTransform.up = Vector3.left;
+        } else if (horizontalVelocity <0)
+        {
+            spriteTransform.up = Vector3.right;
+        } else
+        {
+            if (myRb.velocity.y > 0)
+            {
+                spriteTransform.up = Vector3.down;
+            }
+            else
+            {
+                spriteTransform.up = Vector3.up;
+            }
+        }
+    }
     void ApplyForces()
     {
+        stoneWeight = myStones.weight;
         //
         Vector2 resultantVelocity = new Vector2(horizontalVelocity, verticalVelocity);
         
         myRb.velocity = Vector2.Lerp(myRb.velocity, resultantVelocity,10* Time.deltaTime);
+
+        //adjust swim strength based on weight - shameful really, hardcoded values
+        switch (stoneWeight)
+        {
+            case 8:
+                swimStrength = 0.5f;
+                horizontalMultiplier = 5;
+                break;
+            case 6:
+                swimStrength = 1f;
+                horizontalMultiplier = 7;
+                break;
+            case 4:
+                swimStrength = 1.5f;
+                horizontalMultiplier = 9;
+                break;
+            case 2:
+                swimStrength = 2f;
+                horizontalMultiplier = 11;
+                break;
+            case 0:
+                swimStrength = 2.5f;
+                horizontalMultiplier = 13;
+                break;
+            default:
+                swimStrength = 2.5f;
+                horizontalMultiplier = 15;
+                break;
+        }
         
     }
 
@@ -119,11 +174,11 @@ public class PlayerBehavior : MonoBehaviour
         {
            
             Debug.Log("set Target"+ worldThrowPosition + " direction "+direction);
+
             myStones.removeStone(worldThrowPosition, direction);
-            swimStrength += 0.5f;
-            weight -= 2 ;
-            horizontalMultiplier += 2;
-            myTrans.localScale *= 0.8f;
+            //swimStrength += 0.5f;
+            
+           // horizontalMultiplier += 2;
             throwStrength = 0;
             throwLine.SetPosition(1, Vector3.zero);
         }
@@ -136,13 +191,15 @@ public class PlayerBehavior : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.W))
         {
             myRb.AddForce(Vector2.up * 1000 * swimStrength);
-            oxygenLevel -= 1;
+            oxygenLevel -= swimmingOxygen;
+            swimAnimator.Play("swim");
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
             myRb.AddForce(- Vector2.up * 1000 * swimStrength);
-            oxygenLevel -= 1;
+            oxygenLevel -= swimmingOxygen;
+            swimAnimator.Play("swim");
         }
     }
   
@@ -150,7 +207,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (myTrans.position.y < waterLevel)
         {
-            verticalVelocity = gravity - weight + buoyancy;
+            verticalVelocity = gravity - stoneWeight + buoyancy;
             inWater = true;
         }
         else
@@ -163,6 +220,10 @@ public class PlayerBehavior : MonoBehaviour
     void SetHorizontalVelocity()
     {
         horizontalVelocity = Input.GetAxis("Horizontal")*horizontalMultiplier;
+        if (horizontalVelocity > 0 || horizontalVelocity < 0)
+        {
+            swimAnimator.Play("swim");
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -171,6 +232,11 @@ public class PlayerBehavior : MonoBehaviour
         {
             oxygenLevel += airPocketOxygen;
             Destroy(collision.gameObject);
-        } 
+        }
+       
+       if(collision.CompareTag("endzone"))
+        {
+            myStones.removeAllStones();
+        }
     }
 }

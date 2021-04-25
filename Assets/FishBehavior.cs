@@ -63,7 +63,7 @@ public class FishBehavior : MonoBehaviour
         }
     }
 
-    IEnumerator resetTarget()
+    IEnumerator resetFish()
     {
         fleeCoroutRunning = true;
         yield return new WaitForSeconds(5);
@@ -90,13 +90,10 @@ public class FishBehavior : MonoBehaviour
     {
         if(collision.collider.CompareTag("stone"))
         {
-            StopCoroutine(changeTarget());
-            coroutRunning = false;
-            targetPosition = fleePos;
-            startPosition = transform.position;
-            fleeing = true;
             
-            time = 0;
+            coroutRunning = false;
+            fleeing = true;
+            StartCoroutine(resetFish());
         }
     }
 

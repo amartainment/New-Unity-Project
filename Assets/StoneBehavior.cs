@@ -19,6 +19,8 @@ public class StoneBehavior : MonoBehaviour
     Rigidbody2D myRb;
     public string direction = "right";
     public Vector2 targetPosition;
+    StoneManager myManager;
+    
     void Start()
     {
         PhyMan = GameObject.FindGameObjectWithTag("PhysicsManager").GetComponent<PhysicsManager>();
@@ -26,8 +28,13 @@ public class StoneBehavior : MonoBehaviour
         gravity = PhyMan.gravity;
         buoyancy = PhyMan.buoyancy;
         myRb = GetComponent<Rigidbody2D>();
+        setStoneManager();
     }
 
+    public void setStoneManager()
+    {
+        myManager = transform.parent.GetComponent<StoneManager>();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -90,5 +97,13 @@ public class StoneBehavior : MonoBehaviour
         verticalVelocity = gravity - weight + buoyancy;
         Vector2 targetVelocity = new Vector2(horizontalVelocity, verticalVelocity);
         myRb.velocity = Vector2.Lerp(myRb.velocity, targetVelocity, 10 * Time.deltaTime);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (connected)
+        {
+            myManager.RemoveThisStone(this);
+        }
     }
 }

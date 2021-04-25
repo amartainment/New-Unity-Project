@@ -6,6 +6,7 @@ public class StoneManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public List<StoneBehavior> stones;
+    public int weight = 8;
     void Start()
     {
         
@@ -19,8 +20,32 @@ public class StoneManager : MonoBehaviour
 
     public void removeStone(Vector2 targetPosition, string dir)
     {
-        //stones[0].BreakConnection(strength,direction);
-        stones[0].NewBreakConnection(targetPosition,dir);
-        stones.Remove(stones[0]);
+        if (stones.Count > 0)
+        {
+            //stones[0].BreakConnection(strength,direction);
+            stones[0].NewBreakConnection(targetPosition, dir);
+            stones.Remove(stones[0]);
+            weight -= 2;
+        }
+    }
+
+    public void RemoveThisStone(StoneBehavior stone)
+    {
+        stone.NewBreakConnection(stone.transform.position, "right");
+        stones.Remove(stone);
+        weight -= 2;
+    }
+
+    public void removeAllStones()
+    {
+        if (stones.Count > 0)
+        {
+            foreach (StoneBehavior stone in stones)
+            {
+                //stones.Remove(stone);
+                stone.NewBreakConnection(stone.transform.position, "right");
+                weight -= 2;
+            }
+        }
     }
 }
