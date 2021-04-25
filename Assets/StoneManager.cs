@@ -48,5 +48,7 @@ public class StoneManager : MonoBehaviour
                 weight -= weightPerStone;
             }
         }
+
+        stones = new List<StoneBehavior>();
     }
 }

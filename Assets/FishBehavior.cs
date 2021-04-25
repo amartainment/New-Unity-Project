@@ -7,96 +7,153 @@ public class FishBehavior : MonoBehaviour
     // Start is called before the first frame update
     public Transform trans1;
     public Transform trans2;
-    public Transform trans3;
     Vector2 pos1;
     Vector2 pos2;
-    Vector2 fleePos;
+    List<Vector2> targetPositions;
     public float speed = 2;
-    public bool fleeing = false;
+    public bool stunned= false;
     Vector2 targetPosition;
-    Vector2 startPosition;
+    public int stunTime = 8;
+    
     Rigidbody2D myRb;
     bool coroutRunning = false;
-    bool fleeCoroutRunning = false;
+    bool stunnedCoroutRunning = false;
     public float time = 0;
     public float duration = 3;
+    public Transform spriteTransform;
+    int targetIndex = 0;
+    Transform myTrans;
+    public Animator myAnimator;
     void Start()
     {
         myRb = GetComponent<Rigidbody2D>();
         pos1 = trans1.position;
         pos2 = trans2.position;
-        fleePos = trans3.position;
-        targetPosition = pos2;
-        startPosition = pos1;
+        
+        myTrans = myRb.transform;
+        targetPositions = new List<Vector2>();
+        targetPositions.Add(pos1);
+        targetPositions.Add(pos2);
+        PickATarget(); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoveToTarget();
+        MoveToTaget();
         UpdateTarget();
+        HandleAnimations();  
     }
 
-    
-
-    void MoveToTarget()
+    void HandleAnimations()
     {
-        time += Time.deltaTime;
-        float t = time / duration;
-        t = t * t * (3f - 2f * t);
-        transform.position = Vector3.Lerp(startPosition, targetPosition, t);
-    }
-
-    void UpdateTarget()
-    {
-        if (!fleeing)
+        if(myRb.velocity.x <0)
         {
-            if (Vector2.SqrMagnitude(myRb.position - targetPosition) <= 0.1f)
+            spriteTransform.right = Vector2.right;
+        } else
+        {
+            spriteTransform.right = Vector2.left;
+        }
+    }
+
+    void MoveToTaget()
+    {
+        GoToPosition(targetPosition);
+
+    }
+
+    void PickATarget()
+    {
+        if (targetIndex == 0)
+        { targetIndex = 1; }
+        else
+        {
+            targetIndex = 0;
+        }
+          
+
+        targetPosition = targetPositions[targetIndex];
+       
+    }
+
+    void GoToPosition(Vector2 position)
+    {
+        if (!stunned)
+        {
+            Vector2 direction = position - myRb.position;
+
+            if (direction.sqrMagnitude > 0.1f)
             {
-                if (!coroutRunning)
-                    StartCoroutine(changeTarget());
-                startPosition = targetPosition;
+                myRb.velocity = direction.normalized * speed;
             }
-        } else
-        {
+            else
+            {
+                myRb.velocity = Vector2.zero;
+                PickATarget();
+            }
+        }
+        
+    }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("stone"))
+        {
+            StoneBehavior stone = collision.gameObject.GetComponent<StoneBehavior>();
+            if (!stone.connected)
+            {
+                if (!stunnedCoroutRunning)
+                {
+                    StartCoroutine(StunDelay());
+                }
+            }
+        }
+
+        if (collision.CompareTag("Player"))
+        {
+            myAnimator.Play("chomp");
+            Destroy(collision.gameObject);
         }
     }
-
-    IEnumerator resetFish()
-    {
-        fleeCoroutRunning = true;
-        yield return new WaitForSeconds(5);
-        startPosition = transform.position;
-        targetPosition = pos1;
-        fleeCoroutRunning = false;
-    }
-    IEnumerator changeTarget()
-    {
-        coroutRunning = true;
-        yield return new WaitForSeconds(2);
-        if(targetPosition == pos2)
-        {
-            targetPosition = pos1;
-        } else
-        {
-            targetPosition = pos2;
-        }
-        coroutRunning = false;
-        time = 0;
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("stone"))
         {
-            
-            coroutRunning = false;
-            fleeing = true;
-            StartCoroutine(resetFish());
+            if (!stunnedCoroutRunning)
+            {
+                StartCoroutine(StunDelay());
+            }
+        }
+
+        if(collision.collider.CompareTag("Player"))
+        {
+            myAnimator.Play("chomp");
+            Destroy(collision.collider.gameObject);
         }
     }
 
+    void UpdateTarget()
+    {   
+    }
+
+    
+
+    IEnumerator StunDelay()
+    {
+        stunned = true;
+        Vector2 currentVelocity = myRb.velocity;
+    
+        stunnedCoroutRunning = true;
+        myRb.velocity = Vector2.zero;
+        yield return new WaitForSeconds(stunTime);
+        myRb.velocity = currentVelocity;
+   
+        stunned = false;
+        
+    }
+    
+
+ 
 
 
 

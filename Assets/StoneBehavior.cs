@@ -10,7 +10,7 @@ public class StoneBehavior : MonoBehaviour
     float buoyancy;
     public float weight;
     PhysicsManager PhyMan;
-    bool connected = true;
+    public bool connected = true;
     float verticalVelocity = 0;
     float horizontalVelocity = 0;
     public float stoneThrowMultiplier = 2000;
@@ -101,9 +101,14 @@ public class StoneBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (connected)
+        /*
+        if (collision.collider.CompareTag("endZone"))
         {
-            myManager.RemoveThisStone(this);
+            if (connected)
+            {
+                myManager.RemoveThisStone(this);
+            }
         }
+        */
     }
 }

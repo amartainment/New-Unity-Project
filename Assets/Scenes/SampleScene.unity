@@ -329,7 +329,7 @@ PrefabInstance:
     - target: {fileID: 8703420537073232612, guid: ddf21105f7870cd4796cae720d03f8e5,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8703420537073232614, guid: ddf21105f7870cd4796cae720d03f8e5,
         type: 3}
@@ -2253,6 +2253,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!4 &1050964595 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1436838748683272005, guid: ddf21105f7870cd4796cae720d03f8e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 8703420537705522257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1050964596 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 415779718112771149, guid: ddf21105f7870cd4796cae720d03f8e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 8703420537705522257}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1089836317
 GameObject:
   m_ObjectHideFlags: 0
@@ -2835,7 +2847,7 @@ PrefabInstance:
     - target: {fileID: 8703420537073232612, guid: ddf21105f7870cd4796cae720d03f8e5,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8703420537073232614, guid: ddf21105f7870cd4796cae720d03f8e5,
         type: 3}
@@ -4895,7 +4907,7 @@ PrefabInstance:
     - target: {fileID: 8703420537073232612, guid: ddf21105f7870cd4796cae720d03f8e5,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8703420537073232614, guid: ddf21105f7870cd4796cae720d03f8e5,
         type: 3}
@@ -4951,6 +4963,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8703420537073232616, guid: ddf21105f7870cd4796cae720d03f8e5,
+        type: 3}
+      propertyPath: speed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8703420537073232616, guid: ddf21105f7870cd4796cae720d03f8e5,
+        type: 3}
+      propertyPath: myAnimator
+      value: 
+      objectReference: {fileID: 1050964596}
+    - target: {fileID: 8703420537073232616, guid: ddf21105f7870cd4796cae720d03f8e5,
+        type: 3}
+      propertyPath: spriteTransform
+      value: 
+      objectReference: {fileID: 1050964595}
+    - target: {fileID: 8703420537620566049, guid: ddf21105f7870cd4796cae720d03f8e5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddf21105f7870cd4796cae720d03f8e5, type: 3}

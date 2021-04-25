@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 627524742774254577}
   - component: {fileID: 1730378199907208062}
-  - component: {fileID: 2980480096182921961}
   m_Layer: 8
   m_Name: stones4
   m_TagString: Untagged
@@ -82,41 +81,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &2980480096182921961
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3458322870433667770}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 2, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.016851023, y: 0.4739855}
-      - {x: -0.1952342, y: 0.44869563}
-      - {x: -0.34129795, y: 0.26192015}
-      - {x: -0.32796836, y: 0.075145006}
-      - {x: -0.27850562, y: -0.084678054}
-      - {x: -0.124308676, y: -0.16570032}
-      - {x: 0.0084255785, y: -0.15305549}
-      - {x: 0.1733329, y: -0.065570354}
-      - {x: 0.20296842, y: 0.09272951}
-      - {x: 0.15662798, y: 0.33212557}
 --- !u!1 &5680084406165567708
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,6 +95,7 @@ GameObject:
   - component: {fileID: 5680084406165567704}
   - component: {fileID: 5680084406165567718}
   - component: {fileID: 7092780883366297464}
+  - component: {fileID: 420379992125815209}
   m_Layer: 0
   m_Name: Stone
   m_TagString: stone
@@ -237,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 25
+  connected: 1
   stoneThrowMultiplier: 50
   drag: 1
   timeToTarget: 0.1
@@ -279,3 +245,39 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!60 &420379992125815209
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680084406165567708}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.07076387, y: 0.9748135}
+      - {x: -0.30306035, y: 0.7260772}
+      - {x: -0.5686847, y: 0.27563772}
+      - {x: -0.64937234, y: -0.09251198}
+      - {x: -0.5205148, y: -0.4410928}
+      - {x: -0.317015, y: -0.7164916}
+      - {x: 0.09904525, y: -0.78210384}
+      - {x: 0.5090465, y: -0.5614229}
+      - {x: 0.7509724, y: -0.2813117}
+      - {x: 0.7343967, y: 0.03108912}
+      - {x: 0.5109136, y: 0.8252485}
