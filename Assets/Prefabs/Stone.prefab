@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 5680084406165567718}
   - component: {fileID: 7092780883366297464}
   - component: {fileID: 420379992125815209}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Stone
   m_TagString: stone
   m_Icon: {fileID: 0}
@@ -208,6 +208,7 @@ MonoBehaviour:
   timeToTarget: 0.1
   direction: right
   targetPosition: {x: 0, y: 0}
+  myManager: {fileID: 0}
 --- !u!255 &5680084406165567718
 FixedJoint2D:
   m_ObjectHideFlags: 0

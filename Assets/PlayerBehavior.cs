@@ -29,6 +29,7 @@ public class PlayerBehavior : MonoBehaviour
     LineRenderer throwLine;
     public Animator swimAnimator;
     public Transform spriteTransform;
+    public float throwDistance = 5f;
     
     
     void Start()
@@ -143,24 +144,27 @@ public class PlayerBehavior : MonoBehaviour
         string direction = "right";
         if (horizontifiedThrow.x > 0)
         {
-             worldThrowPosition = new Vector2(transform.position.x + localThrowPosition.x, 0);
+             worldThrowPosition = new Vector2(transform.position.x + throwDistance, 0);
             direction = "right";
         } else
         {
-             worldThrowPosition = new Vector2(transform.position.x - localThrowPosition.x, 0);
+             worldThrowPosition = new Vector2(transform.position.x - throwDistance, 0);
             direction = "left";
         } 
 
         if (Input.GetMouseButtonDown(0))
         {
-            throwStrength = 0;
+           // throwStrength = 0;
+            myStones.removeStone(worldThrowPosition, direction);
         }
 
         if(Input.GetMouseButton(0))
         {
             
             
-            throwStrength += 0.05f;
+          //  throwStrength += 0.05f;
+
+/*
             if (horizontifiedThrow.x > 0)
             {
                 throwLine.SetPosition(1, localThrowPosition);
@@ -168,19 +172,20 @@ public class PlayerBehavior : MonoBehaviour
             {
                 throwLine.SetPosition(1, -localThrowPosition);
             }
+*/
         }
 
         if(Input.GetMouseButtonUp(0))
         {
            
-            Debug.Log("set Target"+ worldThrowPosition + " direction "+direction);
+          //  Debug.Log("set Target"+ worldThrowPosition + " direction "+direction);
 
-            myStones.removeStone(worldThrowPosition, direction);
+          //  myStones.removeStone(worldThrowPosition, direction);
             //swimStrength += 0.5f;
             
            // horizontalMultiplier += 2;
-            throwStrength = 0;
-            throwLine.SetPosition(1, Vector3.zero);
+         //   throwStrength = 0;
+        //    throwLine.SetPosition(1, Vector3.zero);
         }
 
        
@@ -193,6 +198,7 @@ public class PlayerBehavior : MonoBehaviour
             myRb.AddForce(Vector2.up * 1000 * swimStrength);
             oxygenLevel -= swimmingOxygen;
             
+            if(!swimAnimator.GetCurrentAnimatorStateInfo(0).IsName("swim"))
             swimAnimator.Play("swim");
         }
 
@@ -200,7 +206,8 @@ public class PlayerBehavior : MonoBehaviour
         {
             myRb.AddForce(- Vector2.up * 1000 * swimStrength);
             oxygenLevel -= swimmingOxygen;
-            swimAnimator.Play("swim");
+            if (!swimAnimator.GetCurrentAnimatorStateInfo(0).IsName("swim"))
+                swimAnimator.Play("swim");
         }
     }
   
@@ -223,7 +230,8 @@ public class PlayerBehavior : MonoBehaviour
         horizontalVelocity = Input.GetAxis("Horizontal")*horizontalMultiplier;
         if (horizontalVelocity > 0 || horizontalVelocity < 0)
         {
-            swimAnimator.Play("swim");
+            if (!swimAnimator.GetCurrentAnimatorStateInfo(0).IsName("swim"))
+                swimAnimator.Play("swim");
         }
     }
 

@@ -146,11 +146,12 @@ public class FishBehavior : MonoBehaviour
     {
         stunned = true;
         Vector2 currentVelocity = myRb.velocity;
-    
+        myAnimator.Play("sharkhit");
         stunnedCoroutRunning = true;
         myRb.velocity = Vector2.zero;
         yield return new WaitForSeconds(stunTime);
         myRb.velocity = currentVelocity;
+        myAnimator.Play("move");
    
         stunned = false;
         

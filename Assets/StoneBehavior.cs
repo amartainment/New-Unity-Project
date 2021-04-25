@@ -19,11 +19,13 @@ public class StoneBehavior : MonoBehaviour
     Rigidbody2D myRb;
     public string direction = "right";
     public Vector2 targetPosition;
-    StoneManager myManager;
+    public StoneManager myManager;
+    Transform playerTrans;
     
     void Start()
     {
         PhyMan = GameObject.FindGameObjectWithTag("PhysicsManager").GetComponent<PhysicsManager>();
+        playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         myJoint = GetComponent<FixedJoint2D>();
         gravity = PhyMan.gravity;
         buoyancy = PhyMan.buoyancy;
@@ -33,7 +35,7 @@ public class StoneBehavior : MonoBehaviour
 
     public void setStoneManager()
     {
-        myManager = transform.parent.GetComponent<StoneManager>();
+        
     }
     // Update is called once per frame
     void Update()
@@ -64,6 +66,7 @@ public class StoneBehavior : MonoBehaviour
         {
             if (transform.position.x >= targetPosition.x)
             {
+               
                 horizontalVelocity = 0;
                 // myRb.velocity = new Vector2(0, myRb.velocity.y);
             }
@@ -72,6 +75,7 @@ public class StoneBehavior : MonoBehaviour
             if(transform.position.x <= targetPosition.x )
             {
                 horizontalVelocity = 0;
+                Debug.Log(transform.position.x);
             }
         }
         
@@ -82,7 +86,7 @@ public class StoneBehavior : MonoBehaviour
     public void NewBreakConnection (Vector2 finalPosition, string dir)
     {
         Destroy(myJoint);
-        
+        transform.position = playerTrans.position;   
         horizontalVelocity = (finalPosition.x - myRb.position.x) / timeToTarget;
         
         targetPosition = finalPosition;
@@ -96,7 +100,8 @@ public class StoneBehavior : MonoBehaviour
     {
         verticalVelocity = gravity - weight + buoyancy;
         Vector2 targetVelocity = new Vector2(horizontalVelocity, verticalVelocity);
-        myRb.velocity = Vector2.Lerp(myRb.velocity, targetVelocity, 10 * Time.deltaTime);
+       myRb.velocity = Vector2.Lerp(myRb.velocity, targetVelocity, 10 * Time.deltaTime);
+      // myRb.velocity = targetVelocity;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
