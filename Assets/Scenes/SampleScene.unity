@@ -326,6 +326,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fish (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8703420537073232612, guid: ddf21105f7870cd4796cae720d03f8e5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8703420537073232614, guid: ddf21105f7870cd4796cae720d03f8e5,
         type: 3}
       propertyPath: m_RootOrder
@@ -2652,6 +2657,7 @@ MonoBehaviour:
   - {fileID: 1907548189}
   - {fileID: 721395115}
   weight: 8
+  weightPerStone: 2
 --- !u!1 &1294943603
 GameObject:
   m_ObjectHideFlags: 0
@@ -2825,6 +2831,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fish (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8703420537073232612, guid: ddf21105f7870cd4796cae720d03f8e5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8703420537073232614, guid: ddf21105f7870cd4796cae720d03f8e5,
         type: 3}
@@ -4880,6 +4891,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fish
+      objectReference: {fileID: 0}
+    - target: {fileID: 8703420537073232612, guid: ddf21105f7870cd4796cae720d03f8e5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8703420537073232614, guid: ddf21105f7870cd4796cae720d03f8e5,
         type: 3}
