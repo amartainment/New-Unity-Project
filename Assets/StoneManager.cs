@@ -7,9 +7,10 @@ public class StoneManager : MonoBehaviour
     // Start is called before the first frame update
     public List<StoneBehavior> stones;
     public int weight = 8;
+    public int weightPerStone = 2;
     void Start()
     {
-        
+        weight = weightPerStone * 4;
     }
 
     // Update is called once per frame
@@ -25,7 +26,7 @@ public class StoneManager : MonoBehaviour
             //stones[0].BreakConnection(strength,direction);
             stones[0].NewBreakConnection(targetPosition, dir);
             stones.Remove(stones[0]);
-            weight -= 2;
+            weight -= weightPerStone;
         }
     }
 
@@ -33,7 +34,7 @@ public class StoneManager : MonoBehaviour
     {
         stone.NewBreakConnection(stone.transform.position, "right");
         stones.Remove(stone);
-        weight -= 2;
+        weight -= weightPerStone;
     }
 
     public void removeAllStones()
@@ -44,7 +45,7 @@ public class StoneManager : MonoBehaviour
             {
                 //stones.Remove(stone);
                 stone.NewBreakConnection(stone.transform.position, "right");
-                weight -= 2;
+                weight -= weightPerStone;
             }
         }
     }

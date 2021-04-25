@@ -192,6 +192,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             myRb.AddForce(Vector2.up * 1000 * swimStrength);
             oxygenLevel -= swimmingOxygen;
+            
             swimAnimator.Play("swim");
         }
 
