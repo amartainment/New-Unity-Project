@@ -202,13 +202,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weight: 25
-  connected: 1
+  connected: 0
   stoneThrowMultiplier: 50
   drag: 1
   timeToTarget: 0.1
   direction: right
   targetPosition: {x: 0, y: 0}
   myManager: {fileID: 0}
+  pickedUp: 0
+  myCollider: {fileID: 420379992125815209}
 --- !u!255 &5680084406165567718
 FixedJoint2D:
   m_ObjectHideFlags: 0

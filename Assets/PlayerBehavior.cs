@@ -11,7 +11,7 @@ public class PlayerBehavior : MonoBehaviour
     public int stoneWeight = 1;
     public float horizontalVelocity = 0;
     public float verticalVelocity = 0;
-    private float horizontalMultiplier = 5;
+    private float horizontalMultiplier = 15;
     private float swimStrength = 0.5f;
     public float throwStrength = 0;
     public PhysicsManager phyMan;
@@ -30,7 +30,10 @@ public class PlayerBehavior : MonoBehaviour
     public Animator swimAnimator;
     public Transform spriteTransform;
     public float throwDistance = 5f;
-    
+    public bool levelStarted = false;
+    public GameObject rope;
+    public GameObject splashPrefab;
+    private bool splashed = false;
     
     void Start()
     {
@@ -44,15 +47,33 @@ public class PlayerBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ApplyForces();
-        SetVerticalVelocity();
+        if (levelStarted)
+        {
+            
+            SetVerticalVelocity();
+
+            ThrowRock();
+            Swim();
+            ControlOxygenLevels();
+            HandleAnimations();
+        }
+
         SetHorizontalVelocity();
-        ThrowRock();
-        Swim();
-        ControlOxygenLevels();
-        HandleAnimations();
+        ApplyForces();
+        HandleLevelStart();
     }
 
+    void HandleLevelStart()
+    {
+        if (!levelStarted)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                levelStarted = true;
+                rope.SetActive(false);
+            }
+        }
+    }
     void HandleAnimations()
     {
         if(horizontalVelocity >0)
@@ -76,33 +97,37 @@ public class PlayerBehavior : MonoBehaviour
     void ApplyForces()
     {
         stoneWeight = myStones.weight;
+        int numberOfStones = stoneWeight / myStones.weightPerStone;
         //
         Vector2 resultantVelocity = new Vector2(horizontalVelocity, verticalVelocity);
         
-        myRb.velocity = Vector2.Lerp(myRb.velocity, resultantVelocity,10* Time.deltaTime);
+        myRb.velocity = Vector2.Lerp(myRb.velocity, resultantVelocity,20* Time.deltaTime);
 
         //adjust swim strength based on weight - shameful really, hardcoded values
-        switch (stoneWeight)
+
+       
+        switch (numberOfStones)
         {
-            case 8:
-                swimStrength = 0.5f;
-                horizontalMultiplier = 5;
-                break;
-            case 6:
-                swimStrength = 1f;
-                horizontalMultiplier = 7;
-                break;
             case 4:
+                swimStrength = 0.5f;
+                horizontalMultiplier = 9; //was 5
+                
+                break;
+            case 3:
+                swimStrength = 1f;
+                horizontalMultiplier = 9; // was 7
+                break;
+            case 2:
                 swimStrength = 1.5f;
                 horizontalMultiplier = 9;
                 break;
-            case 2:
+            case 1:
                 swimStrength = 2f;
-                horizontalMultiplier = 11;
+                horizontalMultiplier = 15;// was 11
                 break;
             case 0:
                 swimStrength = 2.5f;
-                horizontalMultiplier = 13;
+                horizontalMultiplier = 15; // was 13
                 break;
             default:
                 swimStrength = 2.5f;
@@ -118,7 +143,14 @@ public class PlayerBehavior : MonoBehaviour
         oxygenSlider.value = oxygenLevel / 100;
         if (inWater)
         {
+            
             oxygenLevel -= oxygenDepletion;
+            if(!splashed)
+            {
+                spriteTransform.gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                Instantiate(splashPrefab, transform.position, Quaternion.identity);
+                splashed = true;
+            }
         }
 
         if(!inWater)
@@ -141,10 +173,11 @@ public class PlayerBehavior : MonoBehaviour
         Vector2 horizontifiedThrow = new Vector2(throwDirection.x, 0);
         Vector2 localThrowPosition = new Vector2(throwStrength, 0);
         Vector2 worldThrowPosition = new Vector2();
+       
         string direction = "right";
         if (horizontifiedThrow.x > 0)
         {
-             worldThrowPosition = new Vector2(transform.position.x + throwDistance, 0);
+             worldThrowPosition =  new Vector2(transform.position.x + throwDistance, 0);
             direction = "right";
         } else
         {
@@ -220,7 +253,7 @@ public class PlayerBehavior : MonoBehaviour
         }
         else
         {
-            verticalVelocity = gravity;
+            verticalVelocity = 2* gravity;
             inWater = false;
         }
     }

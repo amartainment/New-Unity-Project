@@ -10,7 +10,7 @@ public class StoneBehavior : MonoBehaviour
     float buoyancy;
     public float weight;
     PhysicsManager PhyMan;
-    public bool connected = true;
+    public bool connected = false;
     float verticalVelocity = 0;
     float horizontalVelocity = 0;
     public float stoneThrowMultiplier = 2000;
@@ -21,6 +21,9 @@ public class StoneBehavior : MonoBehaviour
     public Vector2 targetPosition;
     public StoneManager myManager;
     Transform playerTrans;
+    public bool pickedUp = false;
+    public PolygonCollider2D myCollider;
+    bool active = true;
     
     void Start()
     {
@@ -46,6 +49,7 @@ public class StoneBehavior : MonoBehaviour
             WaterDrag();
         }
 
+        AdjustColliderStatus();
         
     }
 
@@ -81,18 +85,32 @@ public class StoneBehavior : MonoBehaviour
         
     }
 
- 
+    public void AdjustColliderStatus()
+    {
+        if(pickedUp)
+        {
+            myCollider.isTrigger = true;
+        } 
+
+        if(!connected && pickedUp)
+        {
+            myCollider.isTrigger = false;
+        }
+    }
 
     public void NewBreakConnection (Vector2 finalPosition, string dir)
     {
+        myJoint = GetComponent<FixedJoint2D>();
         Destroy(myJoint);
-        transform.position = playerTrans.position;   
+        Vector3 verticalOffset = new Vector3(0, -5.5f,0);
+        transform.position = verticalOffset + playerTrans.position;   
         horizontalVelocity = (finalPosition.x - myRb.position.x) / timeToTarget;
         
         targetPosition = finalPosition;
         Debug.Log("received target " + targetPosition);
         direction = dir;
         connected = false;
+
         
     }
     
@@ -106,14 +124,29 @@ public class StoneBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        /*
-        if (collision.collider.CompareTag("endZone"))
+        if (active)
         {
-            if (connected)
+            if (collision.collider.CompareTag("Player"))
             {
-                myManager.RemoveThisStone(this);
+                if (myManager.stones.Count < 4)
+                {
+                    myManager.AddStone(this);
+                    pickedUp = true;
+                    connected = true;
+                }
+
             }
         }
-        */
+
+        
+        
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("endzone"))
+        {
+            active = false;
+        }
     }
 }
