@@ -319,7 +319,8 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnDisable()
     {
-       // Instantiate(bubblePrefab, transform.position, Quaternion.identity);
+       GameObject bubble = Instantiate(bubblePrefab, transform.position, Quaternion.identity);
+        bubble.transform.localScale *= 8;
     }
 
 
