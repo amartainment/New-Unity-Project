@@ -26,6 +26,7 @@ public class PlayerBehavior : MonoBehaviour
     public Slider oxygenSlider;
     public float airPocketOxygen = 10f;
     public float swimmingOxygen = 2.5f;
+    public float baseSwimStrength = 0.5f;
     LineRenderer throwLine;
     public Animator swimAnimator;
     public Transform spriteTransform;
@@ -109,28 +110,28 @@ public class PlayerBehavior : MonoBehaviour
         switch (numberOfStones)
         {
             case 4:
-                swimStrength = 0.5f;
+                swimStrength = 1*baseSwimStrength;
                 horizontalMultiplier = 9; //was 5
                 
                 break;
             case 3:
-                swimStrength = 1f;
+                swimStrength = 2* baseSwimStrength;
                 horizontalMultiplier = 9; // was 7
                 break;
             case 2:
-                swimStrength = 1.5f;
+                swimStrength = 3 * baseSwimStrength;
                 horizontalMultiplier = 9;
                 break;
             case 1:
-                swimStrength = 2f;
+                swimStrength = 4 * baseSwimStrength;
                 horizontalMultiplier = 15;// was 11
                 break;
             case 0:
-                swimStrength = 2.5f;
+                swimStrength = 5 * baseSwimStrength;
                 horizontalMultiplier = 15; // was 13
                 break;
             default:
-                swimStrength = 2.5f;
+                swimStrength = 5* baseSwimStrength;
                 horizontalMultiplier = 15;
                 break;
         }

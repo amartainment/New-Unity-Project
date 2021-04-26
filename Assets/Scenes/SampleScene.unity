@@ -2065,6 +2065,7 @@ MonoBehaviour:
   oxygenSlider: {fileID: 399654134}
   airPocketOxygen: 25
   swimmingOxygen: 2.5
+  baseSwimStrength: 1
   swimAnimator: {fileID: 432438934}
   spriteTransform: {fileID: 432438933}
   throwDistance: 0
@@ -5598,6 +5599,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 70905593526634398, guid: 826ecfa739c17494c8c0465c22e2368a,
+        type: 3}
+      propertyPath: m_Mass
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 826ecfa739c17494c8c0465c22e2368a, type: 3}
