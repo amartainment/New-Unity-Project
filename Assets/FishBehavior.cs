@@ -140,7 +140,10 @@ public class FishBehavior : MonoBehaviour
     {   
     }
 
-    
+    public void levelFail()
+    {
+        MyEventSystem.levelLose(2);
+    }
 
     IEnumerator StunDelay()
     {

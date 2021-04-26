@@ -314,4 +314,11 @@ public class PlayerBehavior : MonoBehaviour
         Vector3 offset = new Vector3(0, offsetVal, 0);
         Instantiate(bubblePrefab, transform.position + offset, Quaternion.identity);
     }
+
+    private void OnDestroy()
+    {
+        Instantiate(bubblePrefab, transform.position, Quaternion.identity);
+    }
+
+    
 }
