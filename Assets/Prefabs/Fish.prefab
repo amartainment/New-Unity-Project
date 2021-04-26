@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5557085501635701104}
   - component: {fileID: 415779718112771149}
   - component: {fileID: 6656835877132361678}
+  - component: {fileID: 5549463563329201821}
   m_Layer: 0
   m_Name: Shark_chomp1
   m_TagString: Untagged
@@ -70,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1882774285
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5d0e9a25edf90044a961deeeb072a77a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -138,6 +139,18 @@ PolygonCollider2D:
       - {x: 0.87268203, y: -0.3628998}
       - {x: 1.4375, y: 0.0625}
       - {x: 1.3132298, y: 0.22132227}
+--- !u!114 &5549463563329201821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4761488061055663886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7be1cbede392dce42b8860b20293eded, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8703420536888050880
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +256,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1882774285
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 894709ade5a251f4db4439a3359700ad, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}

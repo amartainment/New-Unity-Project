@@ -31,6 +31,7 @@ public class ScreenLoader : MonoBehaviour
     void LoadLoseScreen(int i)
     {
         loseScreen.SetActive(true);
+        loseScreen.GetComponent<LoseScreen>().updateText(i);
     }
     // Update is called once per frame
     void Update()
