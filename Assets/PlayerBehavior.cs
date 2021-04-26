@@ -37,6 +37,7 @@ public class PlayerBehavior : MonoBehaviour
     public GameObject bubblePrefab;
     private bool splashed = false;
     public ParticleSystem bubbleSystem;
+    public bool treasureCollected = false;
     void Start()
     {
         myTrans = GetComponent<Transform>();
@@ -295,6 +296,14 @@ public class PlayerBehavior : MonoBehaviour
        if(collision.CompareTag("endzone"))
         {
             myStones.removeAllStones();
+        }
+
+       if(collision.CompareTag("boat"))
+        {
+            if(treasureCollected)
+            {
+                Debug.Log("Win Level");
+            }
         }
     }
 

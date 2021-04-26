@@ -1336,9 +1336,10 @@ GameObject:
   - component: {fileID: 430965589}
   - component: {fileID: 430965591}
   - component: {fileID: 430965592}
+  - component: {fileID: 430965593}
   m_Layer: 0
   m_Name: boat2
-  m_TagString: Untagged
+  m_TagString: boat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1452,6 +1453,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.6142888, y: 1.8517379}
   m_EdgeRadius: 0
+--- !u!50 &430965593
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430965588}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &432438931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2104,6 +2126,7 @@ MonoBehaviour:
   bubblePrefab: {fileID: 2214225548167935154, guid: 5f9605b9358083041a26b988df26919f,
     type: 3}
   bubbleSystem: {fileID: 2036209442}
+  treasureCollected: 0
 --- !u!50 &684678477
 Rigidbody2D:
   serializedVersion: 4

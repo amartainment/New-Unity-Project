@@ -11,6 +11,7 @@ TagManager:
   - endzone
   - StoneManage
   - StoneManager
+  - boat
   layers:
   - Default
   - TransparentFX
