@@ -19,8 +19,12 @@ public class TreasureBehavior : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+
         if(collision.CompareTag("Player"))
         {
+            Vector3 offset = new Vector3(0, -5.5f, 0);
+            transform.position = collision.gameObject.transform.position + offset;
             myJoint.connectedBody = collision.attachedRigidbody;
         }
     }

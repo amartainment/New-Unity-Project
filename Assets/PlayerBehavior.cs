@@ -34,8 +34,9 @@ public class PlayerBehavior : MonoBehaviour
     public bool levelStarted = false;
     public GameObject rope;
     public GameObject splashPrefab;
+    public GameObject bubblePrefab;
     private bool splashed = false;
-    
+    public ParticleSystem bubbleSystem;
     void Start()
     {
         myTrans = GetComponent<Transform>();
@@ -152,11 +153,19 @@ public class PlayerBehavior : MonoBehaviour
                 Instantiate(splashPrefab, transform.position, Quaternion.identity);
                 splashed = true;
             }
+            if (!bubbleSystem.isPlaying)
+            {
+                bubbleSystem.Play();
+            }
         }
 
         if(!inWater)
         {
             oxygenLevel = 100;
+            if (bubbleSystem.isPlaying)
+            {
+                bubbleSystem.Stop();
+            }
         }
 
         if(oxygenLevel <=0)
@@ -231,13 +240,14 @@ public class PlayerBehavior : MonoBehaviour
         {
             myRb.AddForce(Vector2.up * 1000 * swimStrength);
             oxygenLevel -= swimmingOxygen;
-            
+            CreateBubble(8);
             if(!swimAnimator.GetCurrentAnimatorStateInfo(0).IsName("swim"))
             swimAnimator.Play("swim");
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
+            CreateBubble(0);
             myRb.AddForce(- Vector2.up * 1000 * swimStrength);
             oxygenLevel -= swimmingOxygen;
             if (!swimAnimator.GetCurrentAnimatorStateInfo(0).IsName("swim"))
@@ -273,13 +283,24 @@ public class PlayerBehavior : MonoBehaviour
     {
        if(collision.CompareTag("air"))
         {
-            oxygenLevel += airPocketOxygen;
-            Destroy(collision.gameObject);
+            AirBubbleBehavior bubble = collision.gameObject.GetComponent<AirBubbleBehavior>();
+            if (!bubble.used)
+            {
+                bubble.Pop();
+                oxygenLevel += airPocketOxygen;
+            }
+            
         }
        
        if(collision.CompareTag("endzone"))
         {
             myStones.removeAllStones();
         }
+    }
+
+    void CreateBubble(float offsetVal)
+    {
+        Vector3 offset = new Vector3(0, offsetVal, 0);
+        Instantiate(bubblePrefab, transform.position + offset, Quaternion.identity);
     }
 }

@@ -9,6 +9,8 @@ TagManager:
   - air
   - stone
   - endzone
+  - StoneManage
+  - StoneManager
   layers:
   - Default
   - TransparentFX

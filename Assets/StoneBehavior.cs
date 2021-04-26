@@ -24,6 +24,8 @@ public class StoneBehavior : MonoBehaviour
     public bool pickedUp = false;
     public PolygonCollider2D myCollider;
     bool active = true;
+    public ParticleSystem bubbleSystem;
+    bool onGround = false;
     
     void Start()
     {
@@ -33,12 +35,13 @@ public class StoneBehavior : MonoBehaviour
         gravity = PhyMan.gravity;
         buoyancy = PhyMan.buoyancy;
         myRb = GetComponent<Rigidbody2D>();
+        
         setStoneManager();
     }
 
     public void setStoneManager()
     {
-        
+        myManager = GameObject.FindGameObjectWithTag("StoneManager").GetComponent<StoneManager>();
     }
     // Update is called once per frame
     void Update()
@@ -90,12 +93,31 @@ public class StoneBehavior : MonoBehaviour
         if(pickedUp)
         {
             myCollider.isTrigger = true;
+
+            if(connected)
+            {
+                if (bubbleSystem.isPlaying)
+                {
+                    bubbleSystem.Stop();
+                }
+            }
+            
         } 
 
         if(!connected && pickedUp)
         {
             myCollider.isTrigger = false;
+            if (!bubbleSystem.isPlaying)
+            {
+                if (!onGround)
+                {
+                    bubbleSystem.Play();
+                }
+            }
         }
+
+        //stop bubbles when resting
+       
     }
 
     public void NewBreakConnection (Vector2 finalPosition, string dir)
@@ -138,9 +160,38 @@ public class StoneBehavior : MonoBehaviour
             }
         }
 
+     
+
         
         
     }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("ground") || collision.collider.CompareTag("stone"))
+        {
+
+            if (bubbleSystem.isPlaying)
+            {
+                onGround = true;
+                bubbleSystem.Stop();
+            }
+
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("ground") || collision.collider.CompareTag("stone"))
+        {
+            onGround = false;
+        }
+         
+    }
+
+
+
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
