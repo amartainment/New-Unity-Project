@@ -5,9 +5,11 @@ using UnityEngine;
 public class SpikeBehavior : MonoBehaviour
 {
     // Start is called before the first frame update
+    public AudioClip deathSound;
+    AudioSource mySource;
     void Start()
     {
-        
+        mySource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -20,8 +22,10 @@ public class SpikeBehavior : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
+            mySource.PlayOneShot(deathSound);
             Destroy(collision.gameObject);
             StartCoroutine(levelFail());
+            
         }
     }
 

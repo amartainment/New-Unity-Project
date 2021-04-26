@@ -24,12 +24,14 @@ public class FishBehavior : MonoBehaviour
     int targetIndex = 0;
     Transform myTrans;
     public Animator myAnimator;
+    public AudioClip eat;
+    private AudioSource mySource;
     void Start()
     {
         myRb = GetComponent<Rigidbody2D>();
         pos1 = trans1.position;
         pos2 = trans2.position;
-        
+        mySource = GetComponent<AudioSource>();
         myTrans = myRb.transform;
         targetPositions = new List<Vector2>();
         targetPositions.Add(pos1);
@@ -114,6 +116,7 @@ public class FishBehavior : MonoBehaviour
         {
             if (!stunned)
             {
+                mySource.PlayOneShot(eat);
                 myAnimator.Play("chomp");
                 Destroy(collision.gameObject);
             }
@@ -131,6 +134,7 @@ public class FishBehavior : MonoBehaviour
 
         if(collision.collider.CompareTag("Player"))
         {
+       
             myAnimator.Play("chomp");
             Destroy(collision.collider.gameObject);
         }

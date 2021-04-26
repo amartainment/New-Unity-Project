@@ -26,6 +26,8 @@ public class StoneBehavior : MonoBehaviour
     bool active = true;
     public ParticleSystem bubbleSystem;
     bool onGround = false;
+    AudioSource mySource;
+    public AudioClip throwSound;
     
     void Start()
     {
@@ -35,7 +37,7 @@ public class StoneBehavior : MonoBehaviour
         gravity = PhyMan.gravity;
         buoyancy = PhyMan.buoyancy;
         myRb = GetComponent<Rigidbody2D>();
-        
+        mySource = GetComponent<AudioSource>();
         setStoneManager();
     }
 
@@ -122,6 +124,7 @@ public class StoneBehavior : MonoBehaviour
 
     public void NewBreakConnection (Vector2 finalPosition, string dir)
     {
+        mySource.PlayOneShot(throwSound);
         myJoint = GetComponent<FixedJoint2D>();
         Destroy(myJoint);
         Vector3 verticalOffset = new Vector3(0, -5.5f,0);

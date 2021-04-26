@@ -1932,6 +1932,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4613490999855130196, guid: ddf21105f7870cd4796cae720d03f8e5,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4613490999855130196, guid: ddf21105f7870cd4796cae720d03f8e5,
+        type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8703420537073232612, guid: ddf21105f7870cd4796cae720d03f8e5,
         type: 3}
       propertyPath: m_Name
@@ -3065,8 +3075,8 @@ PolygonCollider2D:
       - {x: 56.969204, y: 53.147346}
       - {x: 0.42061937, y: 53.218803}
       - {x: -67.15828, y: 53.200294}
-      - {x: -67.30091, y: -116.252716}
-      - {x: 60.161755, y: -116.173}
+      - {x: -67.30091, y: -128.88147}
+      - {x: 60.161755, y: -129.82571}
       - {x: 60.22662, y: 51.778435}
 --- !u!1 &1040395526
 GameObject:
@@ -4475,6 +4485,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4613490999855130196, guid: ddf21105f7870cd4796cae720d03f8e5,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8703420537073232612, guid: ddf21105f7870cd4796cae720d03f8e5,
         type: 3}
       propertyPath: m_Name
