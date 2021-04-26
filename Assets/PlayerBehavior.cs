@@ -126,7 +126,7 @@ public class PlayerBehavior : MonoBehaviour
                 break;
             case 1:
                 swimStrength = 4 * baseSwimStrength;
-                horizontalMultiplier = 15;// was 11
+                horizontalMultiplier = 9;// was 11
                 break;
             case 0:
                 swimStrength = 5 * baseSwimStrength;
@@ -315,10 +315,12 @@ public class PlayerBehavior : MonoBehaviour
         Instantiate(bubblePrefab, transform.position + offset, Quaternion.identity);
     }
 
-    private void OnDestroy()
+    
+
+    private void OnDisable()
     {
-        Instantiate(bubblePrefab, transform.position, Quaternion.identity);
+       // Instantiate(bubblePrefab, transform.position, Quaternion.identity);
     }
 
-    
+
 }
