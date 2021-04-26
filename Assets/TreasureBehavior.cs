@@ -10,7 +10,7 @@ public class TreasureBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GetComponent<PlayerBehavior>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBehavior>();
         myJoint = GetComponent<FixedJoint2D>();   
     }
 

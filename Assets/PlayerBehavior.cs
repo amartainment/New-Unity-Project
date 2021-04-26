@@ -171,7 +171,8 @@ public class PlayerBehavior : MonoBehaviour
 
         if(oxygenLevel <=0)
         {
-            SceneManager.LoadScene(0);
+            MyEventSystem.levelLose(1);
+            Destroy(gameObject);
         }
     }
 
@@ -302,7 +303,8 @@ public class PlayerBehavior : MonoBehaviour
         {
             if(treasureCollected)
             {
-                Debug.Log("Win Level");
+                MyEventSystem.levelWin(1);
+                Destroy(gameObject);
             }
         }
     }
