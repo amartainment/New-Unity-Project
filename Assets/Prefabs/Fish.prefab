@@ -293,6 +293,7 @@ MonoBehaviour:
   spriteTransform: {fileID: 1436838748683272005}
   myAnimator: {fileID: 415779718112771149}
   eat: {fileID: 8300000, guid: bbe7d4181d51ffd4084f46b98d0fd3c9, type: 3}
+  stun: {fileID: 8300000, guid: b3774453dc0a1304988b26bdf81473d1, type: 3}
 --- !u!60 &8703420537073232617
 PolygonCollider2D:
   m_ObjectHideFlags: 0

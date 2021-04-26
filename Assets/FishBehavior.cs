@@ -25,6 +25,7 @@ public class FishBehavior : MonoBehaviour
     Transform myTrans;
     public Animator myAnimator;
     public AudioClip eat;
+    public AudioClip stun;
     private AudioSource mySource;
     void Start()
     {
@@ -106,6 +107,7 @@ public class FishBehavior : MonoBehaviour
             {
                 if (!stunnedCoroutRunning)
                 {
+                    mySource.PlayOneShot(stun);
                     StartCoroutine(StunDelay());
                 }
             }

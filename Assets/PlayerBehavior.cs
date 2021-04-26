@@ -38,6 +38,8 @@ public class PlayerBehavior : MonoBehaviour
     private bool splashed = false;
     public ParticleSystem bubbleSystem;
     public bool treasureCollected = false;
+    bool onGround = false;
+    public LayerMask groundLayer;
     void Start()
     {
         myTrans = GetComponent<Transform>();
@@ -59,6 +61,7 @@ public class PlayerBehavior : MonoBehaviour
             Swim();
             ControlOxygenLevels();
             HandleAnimations();
+            
         }
 
         SetHorizontalVelocity();
@@ -261,7 +264,13 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (myTrans.position.y < waterLevel)
         {
-            verticalVelocity = gravity - stoneWeight + buoyancy;
+            if (!onGround)
+            {
+                verticalVelocity = gravity - stoneWeight + buoyancy;
+            } else
+            {
+                verticalVelocity = 0;
+            }
             inWater = true;
         }
         else
@@ -281,6 +290,7 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
        if(collision.CompareTag("air"))
@@ -309,6 +319,21 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if(collision.collider.CompareTag("ground"))
+        {
+            onGround = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("ground"))
+        {
+            onGround = false;
+        }
+    }
     void CreateBubble(float offsetVal)
     {
         Vector3 offset = new Vector3(0, offsetVal, 0);
